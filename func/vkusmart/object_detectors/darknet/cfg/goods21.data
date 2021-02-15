@@ -1,0 +1,5 @@
+classes=21
+train=/mnt/nfs/19_11_21classes/scenes_train.txt
+valid=/mnt/nfs/19_11_21classes/scenes_test.txt
+names=/mnt/nfs/19_11_21classes/goods21.names
+backup=backup_goods21

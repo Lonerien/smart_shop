@@ -1,0 +1,67 @@
+:9096 {
+    basicauth / {$ADMIN_USER} {$ADMIN_PASSWORD}
+    proxy / prometheus:9090 {
+            transparent
+        }
+
+    errors stderr
+    tls off
+}
+
+:9099 {
+    basicauth / {$ADMIN_USER} {$ADMIN_PASSWORD}
+    proxy / alertmanager:9093 {
+            transparent
+        }
+
+    errors stderr
+    tls off
+}
+
+:9097 {
+    basicauth / {$ADMIN_USER} {$ADMIN_PASSWORD}
+    proxy / pushgateway:9091 {
+            transparent
+        }
+
+    errors stderr
+    tls off
+}
+
+:3006 {
+    proxy / grafana:3000 {
+            transparent
+            websocket
+        }
+
+    errors stderr
+    tls off
+}
+
+:8086 {
+    proxy / cadvisor:8080 {
+            transparent
+            websocket
+        }
+    errors stderr
+    tls off
+}
+
+:15692 {
+   proxy / rabbit:15692 {
+            transparent
+            websocket
+        }
+    errors stderr
+    tls off
+}
+
+:9451 {
+   proxy / nvidia_gpu_prometheus_exporter:9445 {
+            transparent
+            websocket
+        }
+    errors stderr
+    tls off
+}
+

@@ -1,0 +1,24 @@
+FROM nvidia/cuda:10.1-cudnn7-runtime-ubuntu16.04
+
+RUN apt-get update && apt-get upgrade -y &&\
+apt-get install -y --no-install-recommends apt-utils &&\
+apt-get install -y build-essential &&\
+    apt-get install -y wget bzip2
+
+ENV CONDA=/anaconda3
+ENV PATH=$CONDA/bin:$PATH
+RUN wget -O anaconda.sh "https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh" && \
+/bin/bash anaconda.sh -b -p $CONDA && \
+    rm -rf anaconda.sh
+
+ADD environment.yml /
+
+
+RUN conda update -n base conda -y && conda env update
+
+RUN conda env list
+
+COPY imageloaderfordocker.py /code/imgloader.py
+COPY wait-for-it.sh /code/wait-for-it.sh
+
+CMD ["/code/wait-for-it.sh", "-t", "30", "rabbit:5672", "--", "python3", "-u", "/code/imgloader.py"]

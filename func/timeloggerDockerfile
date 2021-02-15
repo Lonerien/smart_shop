@@ -1,0 +1,12 @@
+FROM ubuntu:latest
+
+RUN apt-get update \
+        && apt-get install -y python3-pip python3-dev \
+        && cd /usr/local/bin \
+        && ln -s /usr/bin/python3 python \
+        && pip3 install pika
+
+COPY timelogger.py /code/timelogger.py
+COPY wait-for-it.sh /code/wait-for-it.sh
+
+CMD ["/code/wait-for-it.sh", "-t", "30", "rabbit:5672", "--", "python3", "-u", "/code/timelogger.py"]

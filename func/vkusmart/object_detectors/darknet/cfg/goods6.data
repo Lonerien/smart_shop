@@ -1,0 +1,5 @@
+classes=6
+train=/mnt/nfs/scenes_train.txt
+valid=/mnt/nfs/scenes_test.txt
+names=/mnt/nfs/goods6.names
+backup=backup_goods6
